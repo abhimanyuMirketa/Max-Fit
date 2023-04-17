@@ -1,0 +1,52 @@
+<apex:page controller="EventDetail">
+    <style>
+    .heading{
+        text-align: center;
+    } 
+    .low-heading{
+        margin:20px;
+    }
+    .speakers-list{
+        margin:20px;
+    }
+    th,tb,.buttons{
+        padding:15px;
+        text-align: center;
+    }
+    </style>
+    <div class="heading">
+        <br/>
+        <br/>
+        <apex:outputText value="{!event.Name__c}"/>
+        <br/><br/>
+        <b>Organized by:</b><apex:outputField value="{!event.Organizer__r.Name}"/>
+        <br/><br/><br/>
+    </div>
+    <div class="lower-heading">
+        <b>Location: </b><apex:outputField label="Location : " value="{!event.Locations__r.Name}"/>
+        <br/>
+        <b>Date and Time: </b><apex:outputField label="Date and Time : " value="{!event.Start__c}"/>
+        <br/><br/><br/>
+    </div>
+    <div class="speakers-list">
+        <h1>Speakers : </h1> <br />
+        <table>
+            <tr>
+                <apex:repeat value="{!eventSpeaker}" var="speaker">
+                    <td>
+                        {!speaker.Speaker__r.Name} <br/>
+                        {!speaker.Speaker__r.Profile_URL__c} <br />
+                        <apex:outputText escape="false" value="{!speaker.Speaker__r.About_Me__c}"></apex:outputText><br/>
+                    </td>
+                </apex:repeat>
+            </tr>
+        </table>
+    </div>
+    <div class="buttons">
+        <apex:form >
+            <apex:commandButton value="Speaker Registration" action="{!URLFOR($page.SpeakerRegistration,null,[id=event.Id])}"></apex:commandButton>
+            <apex:commandButton value="Attendee Registration" action="{!URLFOR($page.AttendeeRegistration,null,[id=event.Id])}"></apex:commandButton>
+        </apex:form>
+    </div>
+
+</apex:page>
